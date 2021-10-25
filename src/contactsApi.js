@@ -17,3 +17,10 @@ export async function postContact({ name, number }) {
     },
   });
 }
+
+export async function deleteContactById(id) {
+  return await axios({
+    method: "delete",
+    url: `/contacts/${id}`,
+  });
+}
