@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { addContact } from "../redux/actions";
+import { addNewContact } from "../redux/contactsOperation";
 import { contacts } from "../redux/Selectors/contactFormSelectors";
 import { Form, Label, Input, Button } from "./ContactForm.styled";
 
@@ -33,8 +33,7 @@ function ContactForm() {
     setNumber("");
   };
 
-    const notify = (name) => toast(`${name} is already in contacts`);
-
+  const notify = (name) => toast(`${name} is already in contacts`);
 
   const newContact = () => {
     const contactToAdd = {
@@ -44,38 +43,36 @@ function ContactForm() {
 
     stateContacts.some((contact) => contact.name === contactToAdd.name)
       ? notify(contactToAdd.name)
-      : dispatch(addContact(contactToAdd));
-  }
-  
-  return ( <>
-    <Form action="" onSubmit={handleSubmit}>
-      <Label htmlFor="name">Name</Label>
-      <Input
-        onChange={handleChange}
-        type="text"
-        name="name"
-        value={name}
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-        required
-      />
-      <Label htmlFor="number">Number</Label>
-      <Input
-        onChange={handleChange}
-        type="tel"
-        name="number"
-        value={number}
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-        required
-      />
-  
+      : dispatch(addNewContact(contactToAdd));
+  };
 
-      <Button type="submit">Add contact</Button>
+  return (
+    <>
+      <Form action="" onSubmit={handleSubmit}>
+        <Label htmlFor="name">Name</Label>
+        <Input
+          onChange={handleChange}
+          type="text"
+          name="name"
+          value={name}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+          required
+        />
+        <Label htmlFor="number">Number</Label>
+        <Input
+          onChange={handleChange}
+          type="tel"
+          name="number"
+          value={number}
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+          required
+        />
 
-      
-    </Form>
-    <Toaster
+        <Button type="submit">Add contact</Button>
+      </Form>
+      <Toaster
         position="top-center"
         toastOptions={{
           duration: 3000,
@@ -84,7 +81,7 @@ function ContactForm() {
             color: "#000",
           },
         }}
-    />
+      />
     </>
   );
 }

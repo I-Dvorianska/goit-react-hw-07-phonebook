@@ -6,3 +6,14 @@ export async function fetchAllContacts() {
   const response = await axios.get("/contacts");
   return response;
 }
+
+export async function postContact({ name, number }) {
+  return await axios({
+    method: "post",
+    url: "/contacts",
+    data: {
+      name,
+      number,
+    },
+  });
+}
